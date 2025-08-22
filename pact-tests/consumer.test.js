@@ -9,8 +9,8 @@ describe('Payroll API <-> Mock Broker contract', () => {
   beforeAll(async () => {
     provider = new Pact({
       port: 41000,
-      log: path.resolve(process.cwd(), 'logs', 'pact.log'),
-      dir: path.resolve(process.cwd(), 'pacts'),
+      log: path.resolve(__dirname, 'logs', 'pact.log'),
+      dir: path.resolve(__dirname, 'pacts'),
       spec: 2,
       consumer: 'PayrollAPI',
       provider: 'MockBroker',

@@ -47,7 +47,7 @@ npm install
   ```
 - Provider verification (requires Docker Desktop):
   ```powershell
-  docker run --rm -v C:/Users/Jonathan/Documents/repos/payroll-test/pacts:/pacts pactfoundation/pact-cli:latest verify /pacts/payrollapi-mockbroker.json --provider-base-url=http://host.docker.internal:4000 --provider-states-setup-url=http://host.docker.internal:4000/provider-states
+  docker run --rm -v C:/Users/Jonathan/Documents/repos/payroll-test/pact-tests/pacts:/pacts pactfoundation/pact-cli:latest verify /pacts/payrollapi-mockbroker.json --provider-base-url=http://host.docker.internal:4000 --provider-states-setup-url=http://host.docker/internal:4000/provider-states
   ```
 
 ### 5. Run performance tests
@@ -89,7 +89,7 @@ Our testing strategy follows a layered approach that addresses different aspects
 
 **How it works:**
 1. **Consumer Tests** (`pact-tests/consumer.test.js`): The Payroll API (consumer) defines expected interactions with the Mock Broker (provider)
-2. **Pact Generation:** Consumer tests generate contract files (`pacts/payrollapi-mockbroker.json`) specifying expected request/response formats
+2. **Pact Generation:** Consumer tests generate contract files (`pact-tests/pacts/payrollapi-mockbroker.json`) specifying expected request/response formats
 3. **Provider Verification:** The Mock Broker (provider) is verified against these contracts to ensure it meets the API's expectations
 4. **Provider State Setup:** The broker includes `/provider-states` endpoint to prepare specific test scenarios
 
