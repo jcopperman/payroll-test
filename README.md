@@ -16,6 +16,8 @@ This repository demonstrates a comprehensive Node.js payroll API and mock messag
 - **Swagger UI** at `/api-docs` for API exploration
 - **Contract Testing** with Pact (consumer and provider tests)
 - **Performance Testing** with Artillery (load, stress, spike, and monitoring tests)
+- **Frontend Application** with React and Material-UI
+- **UI Testing** with Playwright for complete user workflow validation
 
 ## Getting Started
 
@@ -65,6 +67,22 @@ npm install
   ```
 - See `performance-tests/README.md` for detailed performance testing options.
 
+### 6. Start the frontend and run E2E tests
+- Install frontend dependencies:
+  ```powershell
+  cd frontend
+  npm install
+  ```
+- Start the frontend (runs on port 3001):
+  ```powershell
+  npm start
+  ```
+- Run E2E tests with Playwright:
+  ```powershell
+  npm run test:e2e
+  ```
+- See `frontend/README.md` for detailed frontend and testing options.
+
 ## Endpoints
 - `POST /employees` - Add employee
 - `GET /employees` - List employees
@@ -80,6 +98,31 @@ This project implements a comprehensive testing strategy aligned with the "Verti
 ### Testing Pyramid: Building the Right Thing Right
 
 Our testing strategy follows a layered approach that addresses different aspects of quality at each level:
+
+#### 🔴 UAT Layer: Building the Right Thing
+
+**Frontend E2E Testing with Playwright** - Validates complete user workflows and business requirements.
+
+**Concept:** "Building the right thing" - Ensuring the system meets user needs and business requirements.
+
+**How it works:**
+1. **User Workflow Tests**: Complete end-to-end user journeys (employee creation → timesheet → payroll)
+2. **Cross-browser Testing**: Chrome, Firefox, Safari compatibility validation
+3. **Mobile Testing**: Responsive design and mobile workflow validation
+4. **Accessibility Testing**: Screen reader and keyboard navigation compliance
+
+**Benefits:**
+- **Business Value Validation**: Ensures the system delivers intended business outcomes
+- **User Experience Quality**: Validates UI/UX and user workflows
+- **Cross-platform Compatibility**: Consistent behavior across browsers and devices
+- **Real-world Testing**: Tests the system as users actually use it
+
+**Test Scenarios:**
+- **Dashboard Functionality**: Statistics, navigation, and quick actions
+- **Employee Lifecycle**: Complete CRUD operations and workflow
+- **Timesheet Management**: Clock in/out and validation
+- **Broker Integration**: Real-time status and message handling
+- **Mobile Responsiveness**: Touch interactions and adaptive layouts
 
 #### 🏗️ Integration Layer: Building the Thing Right
 
