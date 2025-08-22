@@ -1,0 +1,30 @@
+# Global Artillery configuration
+config:
+  # Common settings for all tests
+  defaults:
+    headers:
+      Content-Type: 'application/json'
+      Accept: 'application/json'
+  
+  # Output configuration
+  output:
+    - stdout
+    - file: ./results/performance-results.json
+  
+  # HTTP settings
+  http:
+    timeout: 30
+    pool: 10
+  
+  # Metrics collection
+  ensure:
+    maxErrorRate: 5
+    maxMeanResponseTime: 1000
+  
+  # Plugins
+  plugins:
+    metrics:
+      useOnlyRequestNames: false
+    expect:
+      - statusCode: [200, 201, 404]
+      - contentType: json

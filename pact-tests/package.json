@@ -1,0 +1,16 @@
+{
+  "name": "pact-tests",
+  "version": "1.0.0",
+  "description": "Pact contract tests for payroll API and mock broker.",
+  "main": "consumer.test.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "dependencies": {
+  "@pact-foundation/pact": "^11.1.0",
+    "axios": "^1.11.0"
+  },
+  "devDependencies": {
+    "jest": "^29.0.0"
+  }
+}

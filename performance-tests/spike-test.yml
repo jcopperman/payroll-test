@@ -1,0 +1,39 @@
+config:
+  target: 'http://localhost:3000'
+  phases:
+    - duration: 60
+      arrivalRate: 5
+      name: "Baseline phase"
+    - duration: 30
+      arrivalRate: 100
+      name: "Spike phase"
+    - duration: 60
+      arrivalRate: 5
+      name: "Recovery phase"
+  defaults:
+    headers:
+      Content-Type: 'application/json'
+  processor: './test-data.js'
+
+scenarios:
+  - name: "Spike Test Operations"
+    flow:
+      - post:
+          url: "/employees"
+          json:
+            name: "{{ $randomString() }}"
+          capture:
+            - json: "$.id"
+              as: "employeeId"
+      - post:
+          url: "/timesheets/clock-in"
+          json:
+            employeeId: "{{ employeeId }}"
+      - get:
+          url: "/employees"
+      - post:
+          url: "/timesheets/clock-out"
+          json:
+            employeeId: "{{ employeeId }}"
+      - get:
+          url: "/payroll/{{ employeeId }}"

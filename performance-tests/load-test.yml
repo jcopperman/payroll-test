@@ -1,0 +1,67 @@
+config:
+  target: 'http://localhost:3000'
+  phases:
+    - duration: 60
+      arrivalRate: 10
+      name: "Warm up phase"
+    - duration: 300
+      arrivalRate: 20
+      name: "Sustained load phase"
+    - duration: 60
+      arrivalRate: 5
+      name: "Cool down phase"
+  defaults:
+    headers:
+      Content-Type: 'application/json'
+  processor: './test-data.js'
+
+scenarios:
+  - name: "Employee Management Flow"
+    weight: 30
+    flow:
+      - post:
+          url: "/employees"
+          json:
+            name: "{{ $randomString() }}"
+          capture:
+            - json: "$.id"
+              as: "employeeId"
+      - get:
+          url: "/employees"
+      - think: 2
+      - post:
+          url: "/timesheets/clock-in"
+          json:
+            employeeId: "{{ employeeId }}"
+      - think: 1
+      - post:
+          url: "/timesheets/clock-out"
+          json:
+            employeeId: "{{ employeeId }}"
+      - get:
+          url: "/timesheets/{{ employeeId }}"
+      - get:
+          url: "/payroll/{{ employeeId }}"
+
+  - name: "Timesheet Operations"
+    weight: 40
+    flow:
+      - post:
+          url: "/timesheets/clock-in"
+          json:
+            employeeId: "{{ $randomString() }}"
+      - think: 1
+      - post:
+          url: "/timesheets/clock-out"
+          json:
+            employeeId: "{{ $randomString() }}"
+
+  - name: "Read Operations"
+    weight: 30
+    flow:
+      - get:
+          url: "/employees"
+      - get:
+          url: "/timesheets/{{ $randomString() }}"
+      - get:
+          url: "/payroll/{{ $randomString() }}"

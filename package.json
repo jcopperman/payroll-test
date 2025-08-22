@@ -1,0 +1,27 @@
+{
+  "name": "payroll-api-mvp",
+  "version": "1.0.0",
+  "description": "Simple Node.js Express API for payroll MVP with timesheet functionality.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test:performance": "artillery run performance-tests/load-test.yml",
+    "test:performance:quick": "artillery run performance-tests/quick-test.yml",
+    "test:performance:stress": "artillery run performance-tests/stress-test.yml",
+    "test:performance:spike": "artillery run performance-tests/spike-test.yml",
+    "test:performance:monitor": "artillery run performance-tests/monitoring.yml",
+    "test:performance:all": "node performance-tests/run-tests.js",
+    "test:performance:run": "node performance-tests/run-tests.js"
+  },
+  "dependencies": {
+    "axios": "^1.11.0",
+    "body-parser": "^1.20.2",
+    "express": "^4.18.2",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "artillery": "^2.0.0-27"
+  }
+}

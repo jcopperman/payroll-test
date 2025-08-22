@@ -1,0 +1,48 @@
+config:
+  target: 'http://localhost:3000'
+  phases:
+    - duration: 3600  # 1 hour
+      arrivalRate: 2
+      name: "Continuous monitoring"
+  defaults:
+    headers:
+      Content-Type: 'application/json'
+  processor: './test-data.js'
+  output:
+    - stdout
+    - file: ./results/monitoring-results.json
+  plugins:
+    metrics:
+      useOnlyRequestNames: false
+    expect:
+      - statusCode: [200, 201, 404]
+      - contentType: json
+
+scenarios:
+  - name: "Health Check"
+    weight: 40
+    flow:
+      - get:
+          url: "/employees"
+      - think: 30  # Wait 30 seconds between requests
+
+  - name: "Light Operations"
+    weight: 30
+    flow:
+      - post:
+          url: "/employees"
+          json:
+            name: "{{ $randomString() }}"
+          capture:
+            - json: "$.id"
+              as: "employeeId"
+      - think: 60  # Wait 1 minute between operations
+
+  - name: "Read Operations"
+    weight: 30
+    flow:
+      - get:
+          url: "/timesheets/{{ $randomString() }}"
+      - get:
+          url: "/payroll/{{ $randomString() }}"
+      - think: 45  # Wait 45 seconds between requests

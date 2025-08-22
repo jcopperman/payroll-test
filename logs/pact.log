@@ -1,0 +1,177 @@
+I, [2025-08-22T14:22:30.670015 #30564]  INFO -- : Registered expected interaction POST /message
+D, [2025-08-22T14:22:30.670460 #30564] DEBUG -- : {
+  "description": "a clock-in message",
+  "providerState": "ready to receive clock-in",
+  "request": {
+    "method": "POST",
+    "path": "/message",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "type": "clock-in",
+      "payload": {
+        "employeeId": "123",
+        "time": "2025-08-22T10:00:00.000Z"
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json; charset=utf-8"
+    },
+    "body": {
+      "status": "received",
+      "receiver": "fictitious-receiver",
+      "message": "Mock response for type 'clock-in'",
+      "timestamp": {
+        "json_class": "Pact::Term",
+        "data": {
+          "generate": "2025-08-22T10:00:00.000Z",
+          "matcher": {
+            "json_class": "Regexp",
+            "o": 0,
+            "s": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$"
+          }
+        }
+      }
+    }
+  },
+  "metadata": null
+}
+I, [2025-08-22T14:22:30.688984 #30564]  INFO -- : Received request POST /message
+D, [2025-08-22T14:22:30.689215 #30564] DEBUG -- : {
+  "path": "/message",
+  "query": "",
+  "method": "post",
+  "body": {
+    "type": "clock-in",
+    "payload": {
+      "employeeId": "123",
+      "time": "2025-08-22T10:00:00.000Z"
+    }
+  },
+  "headers": {
+    "Content-Length": "84",
+    "Content-Type": "application/json",
+    "Accept": "application/json, text/plain, */*",
+    "User-Agent": "axios/1.11.0",
+    "Accept-Encoding": "gzip, compress, deflate, br",
+    "Host": "localhost:41000",
+    "Connection": "keep-alive",
+    "Version": "HTTP/1.1"
+  }
+}
+I, [2025-08-22T14:22:30.689542 #30564]  INFO -- : Found matching response for POST /message
+D, [2025-08-22T14:22:30.689701 #30564] DEBUG -- : {
+  "status": 200,
+  "headers": {
+    "Content-Type": "application/json; charset=utf-8"
+  },
+  "body": {
+    "status": "received",
+    "receiver": "fictitious-receiver",
+    "message": "Mock response for type 'clock-in'",
+    "timestamp": {
+      "json_class": "Pact::Term",
+      "data": {
+        "generate": "2025-08-22T10:00:00.000Z",
+        "matcher": {
+          "json_class": "Regexp",
+          "o": 0,
+          "s": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$"
+        }
+      }
+    }
+  }
+}
+I, [2025-08-22T14:22:30.707714 #30564]  INFO -- : Registered expected interaction POST /message
+D, [2025-08-22T14:22:30.708095 #30564] DEBUG -- : {
+  "description": "a clock-out message",
+  "providerState": "ready to receive clock-out",
+  "request": {
+    "method": "POST",
+    "path": "/message",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "type": "clock-out",
+      "payload": {
+        "employeeId": "123",
+        "time": "2025-08-22T18:00:00.000Z"
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json; charset=utf-8"
+    },
+    "body": {
+      "status": "received",
+      "receiver": "fictitious-receiver",
+      "message": "Mock response for type 'clock-out'",
+      "timestamp": {
+        "json_class": "Pact::Term",
+        "data": {
+          "generate": "2025-08-22T18:00:00.000Z",
+          "matcher": {
+            "json_class": "Regexp",
+            "o": 0,
+            "s": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$"
+          }
+        }
+      }
+    }
+  },
+  "metadata": null
+}
+I, [2025-08-22T14:22:30.723323 #30564]  INFO -- : Received request POST /message
+D, [2025-08-22T14:22:30.723623 #30564] DEBUG -- : {
+  "path": "/message",
+  "query": "",
+  "method": "post",
+  "body": {
+    "type": "clock-out",
+    "payload": {
+      "employeeId": "123",
+      "time": "2025-08-22T18:00:00.000Z"
+    }
+  },
+  "headers": {
+    "Content-Length": "85",
+    "Content-Type": "application/json",
+    "Accept": "application/json, text/plain, */*",
+    "User-Agent": "axios/1.11.0",
+    "Accept-Encoding": "gzip, compress, deflate, br",
+    "Host": "localhost:41000",
+    "Connection": "keep-alive",
+    "Version": "HTTP/1.1"
+  }
+}
+I, [2025-08-22T14:22:30.724055 #30564]  INFO -- : Found matching response for POST /message
+D, [2025-08-22T14:22:30.724231 #30564] DEBUG -- : {
+  "status": 200,
+  "headers": {
+    "Content-Type": "application/json; charset=utf-8"
+  },
+  "body": {
+    "status": "received",
+    "receiver": "fictitious-receiver",
+    "message": "Mock response for type 'clock-out'",
+    "timestamp": {
+      "json_class": "Pact::Term",
+      "data": {
+        "generate": "2025-08-22T18:00:00.000Z",
+        "matcher": {
+          "json_class": "Regexp",
+          "o": 0,
+          "s": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$"
+        }
+      }
+    }
+  }
+}
+I, [2025-08-22T14:22:30.740193 #30564]  INFO -- : Writing pact for MockBroker to C:/Users/Jonathan/Documents/repos/payroll-test/pacts/payrollapi-mockbroker.json

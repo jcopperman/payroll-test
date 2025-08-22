@@ -1,0 +1,66 @@
+config:
+  target: 'http://localhost:3000'
+  phases:
+    - duration: 60
+      arrivalRate: 10
+      name: "Warm up phase"
+    - duration: 120
+      arrivalRate: 30
+      name: "Ramp up phase"
+    - duration: 180
+      arrivalRate: 50
+      name: "Stress phase"
+    - duration: 120
+      arrivalRate: 70
+      name: "Peak stress phase"
+    - duration: 60
+      arrivalRate: 10
+      name: "Recovery phase"
+  defaults:
+    headers:
+      Content-Type: 'application/json'
+  processor: './test-data.js'
+
+scenarios:
+  - name: "High Load Employee Operations"
+    weight: 50
+    flow:
+      - post:
+          url: "/employees"
+          json:
+            name: "{{ $randomString() }}"
+          capture:
+            - json: "$.id"
+              as: "employeeId"
+      - post:
+          url: "/timesheets/clock-in"
+          json:
+            employeeId: "{{ employeeId }}"
+      - post:
+          url: "/timesheets/clock-out"
+          json:
+            employeeId: "{{ employeeId }}"
+
+  - name: "Read Heavy Operations"
+    weight: 30
+    flow:
+      - get:
+          url: "/employees"
+      - get:
+          url: "/timesheets/{{ $randomString() }}"
+      - get:
+          url: "/payroll/{{ $randomString() }}"
+
+  - name: "Mixed Operations"
+    weight: 20
+    flow:
+      - post:
+          url: "/employees"
+          json:
+            name: "{{ $randomString() }}"
+      - get:
+          url: "/employees"
+      - post:
+          url: "/timesheets/clock-in"
+          json:
+            employeeId: "{{ $randomString() }}"

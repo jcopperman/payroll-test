@@ -1,0 +1,33 @@
+config:
+  target: 'http://localhost:3000'
+  phases:
+    - duration: 30
+      arrivalRate: 5
+      name: "Quick test phase"
+  defaults:
+    headers:
+      Content-Type: 'application/json'
+  processor: './test-data.js'
+
+scenarios:
+  - name: "Quick API Test"
+    flow:
+      - post:
+          url: "/employees"
+          json:
+            name: "Test Employee"
+          capture:
+            - json: "$.id"
+              as: "employeeId"
+      - get:
+          url: "/employees"
+      - post:
+          url: "/timesheets/clock-in"
+          json:
+            employeeId: "{{ employeeId }}"
+      - post:
+          url: "/timesheets/clock-out"
+          json:
+            employeeId: "{{ employeeId }}"
+      - get:
+          url: "/payroll/{{ employeeId }}"
