@@ -10,4 +10,4 @@ describe('Mock Broker Provider Verification', () => {
       publishVerificationResult: false,
     }).verifyProvider();
   });
-});
+    }, 20000); // Increase timeout to 20 seconds

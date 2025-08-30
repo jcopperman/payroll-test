@@ -59,6 +59,7 @@ function Layout({ children }) {
         {menuItems.map((item) => (
           <ListItem key={item.text} disablePadding>
             <ListItemButton
+              data-testid={`nav-${item.text.toLowerCase().replace(/\s+/g, '-')}`}
               selected={location.pathname === item.path}
               onClick={() => handleNavigation(item.path)}
             >

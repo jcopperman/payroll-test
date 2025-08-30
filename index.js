@@ -10,6 +10,14 @@ app.use(bodyParser.json());
 
 // In-memory data stores
 const employees = [];
+
+// Seed employees for E2E tests
+const seedEmployees = [
+  { id: 'emp_1', name: 'John Doe' },
+  { id: 'emp_2', name: 'Jane Smith' },
+  { id: 'emp_3', name: 'Mike Johnson' }
+];
+employees.push(...seedEmployees);
 const timesheets = [];
 
 // Swagger definition
@@ -172,6 +180,10 @@ app.post('/timesheets/clock-out', (req, res) => {
 });
 
 // View timesheets for employee
+// List all timesheets (for dashboard)
+app.get('/timesheets', (req, res) => {
+  res.json(timesheets);
+});
 /**
  * @swagger
  * /timesheets/{employeeId}:

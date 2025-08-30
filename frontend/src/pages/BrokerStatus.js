@@ -70,7 +70,7 @@ function BrokerStatus() {
 
   return (
     <Box>
-      <Typography variant="h4" gutterBottom>
+      <Typography variant="h4" gutterBottom data-testid="heading-broker-status">
         Broker Status
       </Typography>
 

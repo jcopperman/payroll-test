@@ -21,6 +21,45 @@ This repository demonstrates a comprehensive Node.js payroll API and mock messag
 
 ## Getting Started
 
+### 7. Run all tests with the CLI runner
+
+You can orchestrate all test types (unit, contract, performance, E2E) using the CLI runner script:
+
+```powershell
+node run-tests.js [unit] [contract] [perf] [e2e]
+```
+
+Specify one or more test types to run. If no arguments are given, all test types will run.
+
+**Unit tests** are located in the `unit-tests/` directory and run with:
+```powershell
+node run-tests.js unit
+```
+
+**Contract, provider, and integration tests** are in `pact-tests/` and run with:
+```powershell
+node run-tests.js contract
+```
+
+**Performance tests** use Artillery and run with:
+```powershell
+node run-tests.js perf
+```
+
+**E2E tests** use Playwright and run with:
+```powershell
+node run-tests.js e2e
+```
+
+You can combine types as needed:
+```powershell
+node run-tests.js unit contract      # Run only unit and contract tests
+node run-tests.js perf e2e           # Run only performance and E2E tests
+node run-tests.js                    # Run all test types
+```
+
+This is useful for CI, demos, or local development to validate the full quality stack in one step.
+
 ### 1. Install dependencies
 ```powershell
 npm install

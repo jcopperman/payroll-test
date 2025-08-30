@@ -7,13 +7,20 @@ test.describe('Employee Management Workflow E2E Tests', () => {
 
   test('complete employee lifecycle workflow', async ({ page }) => {
     // Step 1: Navigate to Employees page
-    await page.click('text=Employees');
-    await expect(page).toHaveURL('/employees');
+    // Open drawer if on mobile
+    if (await page.locator('[aria-label="open drawer"]').isVisible()) {
+      await page.click('[aria-label="open drawer"]');
+    }
+  await expect(page.getByRole('button', { name: 'Employees' })).toBeVisible();
+    await page.click('role=button[name="Employees"]');
+    await page.waitForURL('**/employees', { timeout: 5000 });
+    await page.waitForSelector('[data-testid="heading-employees"]', { timeout: 5000 });
     
     // Step 2: Add a new employee
     await page.click('button:has-text("Add Employee")');
     
     // Fill employee form
+    await page.waitForSelector('input[name="name"]', { timeout: 5000 });
     await page.fill('input[name="name"]', 'John Doe');
     await page.click('button:has-text("Save")');
     
@@ -21,10 +28,12 @@ test.describe('Employee Management Workflow E2E Tests', () => {
     await expect(page.locator('text=John Doe')).toBeVisible();
     
     // Step 3: Navigate to Timesheets
-    await page.click('text=Timesheets');
+      await expect(page.locator('[data-testid="nav-timesheets"]:visible')).toBeVisible();
+      await page.click('[data-testid="nav-timesheets"]:visible');
     await expect(page).toHaveURL('/timesheets');
     
     // Step 4: Clock in the employee
+    await page.waitForSelector('select[name="employeeId"]', { timeout: 5000 });
     await page.selectOption('select[name="employeeId"]', 'John Doe');
     await page.click('button:has-text("Clock In")');
     
@@ -32,6 +41,7 @@ test.describe('Employee Management Workflow E2E Tests', () => {
     await expect(page.locator('text=Successfully clocked in')).toBeVisible();
     
     // Step 5: Clock out the employee
+    await page.waitForSelector('select[name="employeeId"]', { timeout: 5000 });
     await page.selectOption('select[name="employeeId"]', 'John Doe');
     await page.click('button:has-text("Clock Out")');
     
@@ -39,7 +49,8 @@ test.describe('Employee Management Workflow E2E Tests', () => {
     await expect(page.locator('text=Successfully clocked out')).toBeVisible();
     
     // Step 6: Navigate to Payroll
-    await page.click('text=Payroll');
+      await expect(page.locator('[data-testid="nav-payroll"]:visible')).toBeVisible();
+      await page.click('[data-testid="nav-payroll"]:visible');
     await expect(page).toHaveURL('/payroll');
     
     // Step 7: View employee payroll
@@ -52,9 +63,15 @@ test.describe('Employee Management Workflow E2E Tests', () => {
   });
 
   test('timesheet validation and error handling', async ({ page }) => {
-    await page.click('text=Timesheets');
+    // Open drawer if on mobile
+    if (await page.locator('[aria-label="open drawer"]').isVisible()) {
+      await page.click('[aria-label="open drawer"]');
+    }
+  await expect(page.getByRole('button', { name: 'Timesheets' })).toBeVisible();
+  await page.click('role=button[name="Timesheets"]');
     
     // Try to clock out without clocking in first
+    await page.waitForSelector('select[name="employeeId"]', { timeout: 5000 });
     await page.selectOption('select[name="employeeId"]', 'John Doe');
     await page.click('button:has-text("Clock Out")');
     
@@ -63,14 +80,20 @@ test.describe('Employee Management Workflow E2E Tests', () => {
   });
 
   test('broker integration verification', async ({ page }) => {
-    await page.click('text=Broker Status');
+    // Open drawer if on mobile
+    if (await page.locator('[aria-label="open drawer"]').isVisible()) {
+      await page.click('[aria-label="open drawer"]');
+    }
+  await expect(page.getByRole('button', { name: 'Broker Status' })).toBeVisible();
+  await page.click('role=button[name="Broker Status"]');
     await expect(page).toHaveURL('/broker');
     
-    // Check broker connection status
-    await expect(page.locator('text=Broker Status')).toBeVisible();
+    // Check broker connection status using data-testid selector
+    await page.waitForSelector('[data-testid="heading-broker-status"]', { timeout: 5000 });
+    await expect(page.locator('[data-testid="heading-broker-status"]')).toBeVisible();
     
-    // Send test message
-    await page.click('button:has-text("Send Test Message")');
+  // Send test message
+  await page.click('button:has-text("Send Message")');
     
     // Verify message was sent
     await expect(page.locator('text=Message sent successfully')).toBeVisible();
@@ -78,14 +101,22 @@ test.describe('Employee Management Workflow E2E Tests', () => {
 
   test('data persistence across page navigation', async ({ page }) => {
     // Add employee
-    await page.click('text=Employees');
+    // Open drawer if on mobile
+    if (await page.locator('[aria-label="open drawer"]').isVisible()) {
+      await page.click('[aria-label="open drawer"]');
+    }
+  await expect(page.getByRole('button', { name: 'Employees' })).toBeVisible();
+  await page.click('role=button[name="Employees"]');
     await page.click('button:has-text("Add Employee")');
+    await page.waitForSelector('input[name="name"]', { timeout: 5000 });
     await page.fill('input[name="name"]', 'Jane Smith');
     await page.click('button:has-text("Save")');
     
     // Navigate away and back
-    await page.click('text=Dashboard');
-    await page.click('text=Employees');
+    await expect(page.locator('[data-testid="nav-dashboard"]:visible')).toBeVisible();
+    await page.click('[data-testid="nav-dashboard"]:visible');
+    await expect(page.locator('[data-testid="nav-employees"]:visible')).toBeVisible();
+    await page.click('[data-testid="nav-employees"]:visible');
     
     // Verify employee still exists
     await expect(page.locator('text=Jane Smith')).toBeVisible();
@@ -96,13 +127,23 @@ test.describe('Employee Management Workflow E2E Tests', () => {
     
     // Navigate using mobile menu
     await page.click('[aria-label="open drawer"]');
-    await page.click('text=Employees');
+    await expect(page.locator('[data-testid="nav-employees"]:visible')).toBeVisible();
+    await page.click('[data-testid="nav-employees"]:visible');
     
     // Verify mobile layout
-    await expect(page.locator('text=Employees')).toBeVisible();
+    // Verify mobile layout using data-testid selector
+    await page.waitForSelector('[data-testid="heading-employees"]', { timeout: 5000 });
+    await expect(page.locator('[data-testid="heading-employees"]')).toBeVisible();
     
     // Test mobile form interaction
     await page.click('button:has-text("Add Employee")');
+    try {
+      await page.waitForSelector('input[name="name"]', { timeout: 5000 });
+    } catch (e) {
+      console.log('DEBUG: Employee form not found (mobile test). Page HTML:');
+      console.log(await page.content());
+      throw e;
+    }
     await page.fill('input[name="name"]', 'Mobile User');
     await page.click('button:has-text("Save")');
     

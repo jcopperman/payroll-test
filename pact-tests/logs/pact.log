@@ -1,0 +1,7 @@
+I, [2025-08-29T13:38:24.899396 #27248]  INFO -- : Registered expected interaction POST /message
+I, [2025-08-29T13:38:24.921009 #27248]  INFO -- : Received request POST /message
+I, [2025-08-29T13:38:24.921466 #27248]  INFO -- : Found matching response for POST /message
+I, [2025-08-29T13:38:24.933548 #27248]  INFO -- : Registered expected interaction POST /message
+I, [2025-08-29T13:38:24.949143 #27248]  INFO -- : Received request POST /message
+I, [2025-08-29T13:38:24.949525 #27248]  INFO -- : Found matching response for POST /message
+I, [2025-08-29T13:38:24.969328 #27248]  INFO -- : Writing pact for MockBroker to C:/Users/Jonathan/Documents/repos/payroll-test/pact-tests/pacts/payrollapi-mockbroker.json
